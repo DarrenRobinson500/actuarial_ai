@@ -35,5 +35,6 @@ def create_data():
 
 # Create records and add them to a dataframe and dataset
 create_data()
-dataframe = pd.DataFrame(data=train_samples, index=None, columns=['age', 'adviser', 'target'])
+dataframe = pd.DataFrame(data=train_samples, index=None, columns=['age', 'adviser', 'lapse'])
+print(dataframe)
 dataframe.to_csv("data.csv", index=False, header=True)

@@ -2,15 +2,18 @@ import pandas as pd
 
 # Read the file
 dtypes = {"age": "category", "adviser": "category",}
-df = pd.read_csv('data.csv', dtype=dtypes, usecols=list(dtypes) + ["target"],)
+df = pd.read_csv('data.csv', dtype=dtypes, usecols=list(dtypes) + ["lapse"],)
 
 # Group the data
-grouped = df.groupby(["age", "adviser"])
+grouping = ["age", "adviser"]
+grouped = df.groupby(grouping)
 
 # Analysis
-lapses_total = grouped['target'].sum()
-policies_total = grouped['target'].count()
+lapses_total = grouped['lapse'].sum()
+policies_total = grouped['lapse'].count()
 rate = lapses_total / policies_total
 
 # Output
 print(rate)
+
+rate.to_csv("rate.csv", index=True, header=True)
