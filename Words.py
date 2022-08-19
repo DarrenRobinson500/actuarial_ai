@@ -54,14 +54,27 @@ model.compile(
     metrics=["accuracy",],
 )
 
+
 # Run
 history = model.fit(
     partial_x_train,
     partial_y_train,
-    epochs=20,
+    epochs=5,
     batch_size=512,
     validation_data=(x_val, y_val)
 )
+
+# Model Analysis
+print()
+print("Model analysis")
+print("Inputs")
+[print(i.shape, i.dtype) for i in model.inputs]
+print("Outputs")
+[print(o.shape, o.dtype) for o in model.outputs]
+print("Layers")
+[print(l.name, l.input_shape, l.dtype) for l in model.layers]
+
+
 
 # Present results
 history_dict = history.history

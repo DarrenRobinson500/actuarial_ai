@@ -2,18 +2,11 @@
 
 import pandas as pd
 
+from constants import *
+
 count_per_data_point = 10
 train_samples = []
 train_labels = []
-AGE_RANGE = [20, 30, 40, 50, 60]
-ADVISER_RANGE = [1, 2, 3]
-
-def lapse_rate_calc(age, adviser):
-    lapse_rate = age / 100
-    if adviser == 3 and age > 45:
-        lapse_rate *= 3
-    lapse_rate = min(lapse_rate, 1)
-    return lapse_rate
 
 def create_records(age, adviser, label, count):
     for _ in range(count):

@@ -13,7 +13,7 @@ test_data -= mean
 test_data /= std
 
 print("Train data:", train_data.shape)
-print("Test data:", test_data.shape)
+print("Train target:", train_targets.shape)
 
 # 2. MODEL
 def build_model():

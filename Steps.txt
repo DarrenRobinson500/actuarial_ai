@@ -1,0 +1,23 @@
+Steps
+1. Create the underlying lapse model - Done
+2. Create a set of data based on this model - Done
+3. Determine lapse rates based on that data - Done
+4. Create a AI model of the lapse rates - Done
+5. Present lapse rates graphically
+
+Projection Model
+6. Base model - Done
+7. Add fees
+8. Add expenses
+9. Add value
+10. Present the model (de-compose value by age, adviser)
+11. Use lapse rates from the AI model
+
+Two time periods - Data
+12. Start with two months of data and create lapse table based on differencing (add identifier to data)
+13. Add more parameters to the data (gender, FUM, duration)
+
+Two time periods - Projection model
+14. Add analysis of change to model
+15. Decompose change in value based on inflows, outflows and investment return
+16. Show change in value by segment
