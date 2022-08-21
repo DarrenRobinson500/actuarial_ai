@@ -1,0 +1,49 @@
+Files
+One time period
+a2. Create 'lapse.csv' (a list of all records, with lapsed policies marked) - Done
+a3. Use 'lapse.csv' to create 'rate.csv' which contain lapse rates - Done
+a4. Use 'rate.csv' to create a AI model of the lapse rates 'lapse.tf'. Present graphically- Done
+a5. Use 'lapse.tf' (lapse model) to project 'lapse.csv' (which contains all policies) - Done
+
+Two time periods - Data (using a3 and a4 from single time period - no need to redo these two)
+b1. Create 'data_s.csv' (data at the start) and 'data_e.csv' (data at the end - without lapses) - Done
+b2. Create 'lapse.csv' (a list of all records, with lapsed policies marked) - Done
+a3. Use 'lapse.csv' to create 'rate.csv' which contain lapse rates - Done
+a4. Use 'rate.csv' to create a AI model of the lapse rates 'lapse.tf'. Present graphically- Done
+b5. Create a lapse table 'lapse_table.csv' so that the AI doesn't need to run every time period
+b6. Use 'lapse_table' (lapse table) to project (which contains all policies) - Done
+b7. Run the same policy at the start and end, and compare - Done
+
+To Do:
+1. Finish analysis of change
+ - Make a merged table with all start data, all end data, NPV0 and NPV1
+ - Add extra columns for aoc_lapse, aoc_investment, aoc_new etc
+ - Add up those columns
+2. Make generic / Remove hard-coded variables
+ - specify a range of files to create lapse rates
+ - specify a list of variables to be carried throughout the analysis
+
+
+
+
+Projection model
+Use 'data_s.csv' and 'data_e.csv' to calc the value at the start and end of the period, and decompose the change
+ - Add analysis of change to model
+ - Decompose change in value based on inflows, outflows and investment return
+ - Allow for multiple policies
+ - Show change in value by segment
+
+
+Projection Model
+ - Base model - Done
+ - Add fees - Done
+ - Add expenses - Done
+ - Add value - Done
+ - Multiple policies - Done
+ - Add age - Done
+ - Connect to data file - Done
+ - Present the model (de-compose value by age, adviser) - Done
+ - Create permanent model - Done
+ - Access permanent model - Done
+ - Use lapse rates from the AI model - Done
+
