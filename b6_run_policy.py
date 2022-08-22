@@ -1,22 +1,33 @@
 from constants import *
 import numpy as np
 import pandas as pd
+import math
 
 table = pd.read_csv('files/lapse_table.csv')
 
-def run_policy(df, policy):
+def run_policy_index(df, policy):
     policy_exists = (df['index'] == policy).any()
     if not policy_exists:
         result = pd.Series([0, 0])
         return result
 
     info = df.loc[df['index'] == policy]
+    return run_policy(info)
 
-    # Data
-    age_s = info.iloc[0]['age']
-    fum_s = info.iloc[0]['fum_s']
-    adviser = info.iloc[0]['adviser']
-    dur_s = info.iloc[0]['dur_s']
+def run_policy(info):
+    # Data (for reading a series)
+    age_s = info['age']
+    fum_s = info['fum_s']
+    adviser = info['adviser']
+    dur_s = info['dur_s']
+
+    if math.isnan(age_s): return pd.Series([0, 0])
+
+    # Data (for reading a dataframe
+    # age_s = info.iloc[0]['age']
+    # fum_s = info.iloc[0]['fum_s']
+    # adviser = info.iloc[0]['adviser']
+    # dur_s = info.iloc[0]['dur_s']
 
     # Time
     time = np.arange(65-age_s)
@@ -48,14 +59,6 @@ def run_policy(df, policy):
     pv_fees = round(sum(fees_disc),2)
     pv_profit = round(sum(profit_disc),2)
 
-
-    # variables_to_print = [time, dur, disc_factor_round, FUM_pp, fees, expense, profit, npv]
-    variables_to_print = [time, lapse_rate]
-    # variables_to_print = [npv]
-    # for x in variables_to_print:
-    #     print(x)
-    # return pv_profit
-
     result = pd.Series([pv_fees, pv_profit])
     return result
 
@@ -69,7 +72,7 @@ def calc_lapse_rate(ages, adviser):
     return result
 
 def run_all():
-    data = pd.read_csv('data.csv')
+    data = pd.read_csv('files/data.csv')
     output = data.apply(run_policy, axis=1)
     data_output = pd.concat([data, output], axis=1)
     data_output.rename(columns={0: "fees", 1: "profit"}, inplace=True)
@@ -88,3 +91,46 @@ def run_all():
     print(type(value))
 
     print(f'Total Value: {sum(value):,.0f}')
+
+def run_policy_aoc(info):
+    info_0 = info[1:5]
+    info_1 = info[5:9]
+
+    info_0.rename({"age_0": "age", "adviser_0": "adviser", "fum_s_0": "fum_s", "dur_s_0": "dur_s"}, inplace=True)
+    output_0 = run_policy(info_0)
+    output_0.rename({0: "fees_0", 1: "profit_0"}, inplace=True)
+
+    info_1.rename({"age_1": "age", "adviser_1": "adviser", "fum_s_1": "fum_s", "dur_s_1": "dur_s"}, inplace=True)
+    output_1 = run_policy(info_1)
+    output_1.rename({0: "fees_1", 1: "profit_1"}, inplace=True)
+
+    output = pd.concat([output_0, output_1])
+
+    return output
+
+
+def run_all_aoc():
+    data = pd.read_csv('files/data_c.csv')
+    output = data.apply(run_policy_aoc, axis=1)
+
+    data_output = pd.concat([data, output], axis=1)
+    # data_output.rename(columns={0: "fees", 1: "profit"}, inplace=True)
+    print("OUTPUT")
+    print(data_output)
+
+    grouping = ["age_0", "adviser_0"]
+    grouped = data_output.groupby(grouping)
+    pd.options.display.float_format = '{:,.0f}'.format
+    value_0 = grouped['profit_0'].sum()
+    value_1 = grouped['profit_1'].sum()
+    print()
+    print("SUMMARY")
+    print(value_0)
+    print(value_1)
+
+    print(f'Start value: {sum(value_0):,.0f}')
+    print(f'End value: {sum(value_1):,.0f}')
+    print(f'Change in value: {sum(value_1 - value_0):,.0f}')
+
+
+run_all_aoc()

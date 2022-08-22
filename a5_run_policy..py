@@ -22,6 +22,10 @@ def calc_lapse_rate(age, adviser):
     return result
 
 def run_policy(info):
+    print("Run policy")
+    print(type(info))
+    print(info)
+
     # Data
     age_s = info['age']
     fum_s = info['fum_s']
@@ -70,7 +74,7 @@ def run_policy(info):
     return result
 
 def run_all():
-    data = pd.read_csv('data.csv')
+    data = pd.read_csv('files/data.csv')
     output = data.apply(run_policy, axis=1)
     data_output = pd.concat([data, output], axis=1)
     data_output.rename(columns={0: "fees", 1: "profit"}, inplace=True)
@@ -92,14 +96,14 @@ def run_all():
     print(f'Total Value: {sum(value):,.0f}')
 
 
-data = {"age": 20, "fum_s":10000, "dur_s": 3, "adviser": 1}
-result = run_policy(data)
-print(result)
+# data = {"age": 20, "fum_s":10000, "dur_s": 3, "adviser": 1}
+# result = run_policy(data)
+# print(result)
 # for age in [20,25,30]:
 #     for adviser in [1,]:
 #         rate = calc_lapse_rate(age, adviser)
 #         print(age, adviser, rate)
-
+run_all()
 
 total_time = round(time.time() - start_time,2)
 print(f"{total_time} seconds")

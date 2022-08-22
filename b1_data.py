@@ -33,3 +33,10 @@ create_data()
 list_to_csv(data_s, "data_s")
 list_to_csv(data_e, "data_e")
 
+df_s = pd.DataFrame(data=data_s, index=None, columns=['index', 'age', 'adviser', 'fum_s', 'dur_s'])
+df_e = pd.DataFrame(data=data_e, index=None, columns=['index', 'age', 'adviser', 'fum_s', 'dur_s'])
+
+df_combined = df_s.join(df_e.set_index('index'), on='index', how='left', lsuffix='_0', rsuffix='_1')
+print(df_combined)
+df_combined.to_csv("files/data_c.csv", index=False, header=True)
+
