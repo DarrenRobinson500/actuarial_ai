@@ -108,29 +108,43 @@ def run_policy_aoc(info):
 
     return output
 
+def get_category(info):
+    age_s_1 = info['age_1']
+    if math.isnan(age_s_1): return "exit"
+    return "continuing"
 
 def run_all_aoc():
+    # Get the data
     data = pd.read_csv('files/data_c.csv')
-    output = data.apply(run_policy_aoc, axis=1)
 
-    data_output = pd.concat([data, output], axis=1)
-    # data_output.rename(columns={0: "fees", 1: "profit"}, inplace=True)
+    # Categorise each row
+    category = data.apply(get_category, axis=1)
+    data_cat = pd.concat([data, category], axis=1)
+    data_cat.rename(columns={0: "cat",}, inplace=True)
+
+    # Add pv_profit and pv_fees
+    output = data_cat.apply(run_policy_aoc, axis=1)
+    data_cat_output = pd.concat([data_cat, output], axis=1)
     print("OUTPUT")
-    print(data_output)
+    print(data_cat_output)
 
-    grouping = ["age_0", "adviser_0"]
-    grouped = data_output.groupby(grouping)
+    # Group the data
+    grouping = ["cat", "adviser_0", ]
+    grouped = data_cat_output.groupby(grouping)
     pd.options.display.float_format = '{:,.0f}'.format
     value_0 = grouped['profit_0'].sum()
     value_1 = grouped['profit_1'].sum()
+    value_b = grouped['profit_0', 'profit_1'].sum()
+
+    # Print the summary
     print()
     print("SUMMARY")
-    print(value_0)
-    print(value_1)
+    print(value_b)
 
     print(f'Start value: {sum(value_0):,.0f}')
     print(f'End value: {sum(value_1):,.0f}')
     print(f'Change in value: {sum(value_1 - value_0):,.0f}')
+
 
 
 run_all_aoc()

@@ -16,7 +16,7 @@ b7. Run the same policy at the start and end, and compare - Done
 
 To Do:
 1. Finish analysis of change
- - Make a merged table with all start data, all end data, NPV0 and NPV1
+ - Make a merged table with all start data, all end data, NPV0 and NPV1 - Done
  - Add extra columns for aoc_lapse, aoc_investment, aoc_new etc
  - Add up those columns
 2. Make generic / Remove hard-coded variables
