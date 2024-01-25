@@ -1,4 +1,7 @@
 import pandas as pd
+import time
+
+start_time = time.time()
 
 # Read the file
 dtypes = {"age": "category", "adviser": "category",}
@@ -17,3 +20,7 @@ rate = lapses_total / policies_total
 print(rate)
 
 rate.to_csv("files/rate.csv", index=True, header=True)
+
+total_time = round(time.time() - start_time, 3)
+print(f"{total_time} seconds")
+

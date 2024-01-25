@@ -1,10 +1,10 @@
 import tensorflow as tf
 from keras.models import load_model
 import pandas as pd
+from constants import *
 
 filename = "models/lapse.tf"
 model = load_model(filename)
-
 
 AGE_RANGE = range(20,66)
 ADVISER_RANGE = [1, 2, 3]
@@ -20,5 +20,5 @@ for age in AGE_RANGE:
 print(table)
 dataframe = pd.DataFrame(data=table, index=None, columns=['age', 'adviser', 'lapse_rate'])
 print(dataframe)
-dataframe.to_csv("files/lapse_table.csv", index=False, header=True)
+dataframe.to_csv(fn_lapse_table, index=False, header=True)
 

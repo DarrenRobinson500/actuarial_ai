@@ -2,7 +2,15 @@ from keras.layers import IntegerLookup, Normalization, StringLookup, Dense, Drop
 import tensorflow as tf
 
 AGE_RANGE = [20, 30, 40, 50, 60]
+AGE_RANGE_NEW = [20, 30]
 ADVISER_RANGE = [1, 2, 3]
+
+fn_data_s = "files/data_s.csv"
+fn_data_e = "files/data_e.csv"
+fn_data_c = "files/data_c.csv"
+fn_lapse_rates = "files/rate.csv"
+fn_lapse_table = 'files/lapse_table.csv'
+fn_output = "files/output.csv"
 
 def lapse_rate_calc(age, adviser):
     lapse_rate = age / 100

@@ -9,7 +9,7 @@ Two time periods - Data (using a3 and a4 from single time period - no need to re
 b1. Create 'data_s.csv' (data at the start) and 'data_e.csv' (data at the end - without lapses) - Done
 b2. Create 'lapse.csv' (a list of all records, with lapsed policies marked) - Done
 a3. Use 'lapse.csv' to create 'rate.csv' which contain lapse rates - Done
-a4. Use 'rate.csv' to create a AI model of the lapse rates 'lapse.tf'. Present graphically- Done
+a4. Use 'rate.csv' to create an AI model of the lapse rates 'lapse.tf'. Present graphically- Done
 b5. Create a lapse table 'lapse_table.csv' so that the AI doesn't need to run every time period
 b6. Use 'lapse_table' (lapse table) to project (which contains all policies) - Done
 b7. Run the same policy at the start and end, and compare - Done
@@ -17,9 +17,19 @@ b7. Run the same policy at the start and end, and compare - Done
 To Do:
 1. Finish analysis of change
  - Make a merged table with all start data, all end data, NPV0 and NPV1 - Done
- - Add extra columns for aoc_lapse, aoc_investment, aoc_new etc
- - Add up those columns
-2. Make generic / Remove hard-coded variables
+ - Add extra column to categorise change (lapse, continuing) - Done [This is not an analysis of change vs expected, just what has changed]
+ - Add up those columns - Done
+2. Add new business
+ - Add to data_e - Done
+ - Add to category - Done
+ - Check lapse investigation still work - Done
+3. Add prod_code
+ - Add to 'data_s.csv' and 'data_e.csv'
+ - Use it to lookup "fee.csv"
+4. Make a table of the change in value
+ - End = Start + NB - Lapses +/- changes to existing
+5. Set up GUI
+6. Make generic / Remove hard-coded variables
  - specify a range of files to create lapse rates
  - specify a list of variables to be carried throughout the analysis
 

@@ -2,8 +2,17 @@ from constants import *
 import numpy as np
 import pandas as pd
 import math
+import warnings
+import time
 
-table = pd.read_csv('files/lapse_table.csv')
+start_time = time.time()
+
+warnings.filterwarnings("ignore")
+
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
+
+table = pd.read_csv(fn_lapse_table)
 
 def run_policy_index(df, policy):
     policy_exists = (df['index'] == policy).any()
@@ -109,13 +118,15 @@ def run_policy_aoc(info):
     return output
 
 def get_category(info):
+    age_s_0 = info['age_0']
     age_s_1 = info['age_1']
+    if math.isnan(age_s_0): return "new"
     if math.isnan(age_s_1): return "exit"
     return "continuing"
 
 def run_all_aoc():
     # Get the data
-    data = pd.read_csv('files/data_c.csv')
+    data = pd.read_csv(fn_data_c)
 
     # Categorise each row
     category = data.apply(get_category, axis=1)
@@ -125,26 +136,37 @@ def run_all_aoc():
     # Add pv_profit and pv_fees
     output = data_cat.apply(run_policy_aoc, axis=1)
     data_cat_output = pd.concat([data_cat, output], axis=1)
+    data_cat_output['profit_d'] = data_cat_output['profit_1'] - data_cat_output['profit_0']
     print("OUTPUT")
     print(data_cat_output)
+    data_cat_output.to_csv(fn_output, index=False, header=True)
 
     # Group the data
     grouping = ["cat", "adviser_0", ]
+    grouping = ["cat", ]
     grouped = data_cat_output.groupby(grouping)
     pd.options.display.float_format = '{:,.0f}'.format
-    value_0 = grouped['profit_0'].sum()
-    value_1 = grouped['profit_1'].sum()
-    value_b = grouped['profit_0', 'profit_1'].sum()
+    # value_0 = grouped['profit_0'].sum()
+    # value_1 = grouped['profit_1'].sum()
+    # count_b = grouped['profit_0', 'profit_1'].count()
+    value_b = grouped['profit_0', 'profit_1', 'profit_d'].sum()
+    # value_b.append(value_b.sum(numeric_only=True), ignore_index=True)
+    value_b.loc['total'] = value_b.sum()
 
     # Print the summary
     print()
     print("SUMMARY")
+    # print(count_b)
+    print()
     print(value_b)
 
-    print(f'Start value: {sum(value_0):,.0f}')
-    print(f'End value: {sum(value_1):,.0f}')
-    print(f'Change in value: {sum(value_1 - value_0):,.0f}')
+    # print(f'Start value: {sum(value_0):,.0f}')
+    # print(f'End value: {sum(value_1):,.0f}')
+    # print(f'Change in value: {sum(value_1 - value_0):,.0f}')
 
 
 
 run_all_aoc()
+
+total_time = round(time.time() - start_time, 3)
+print(f"{total_time} seconds")

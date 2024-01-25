@@ -80,7 +80,7 @@ def plot_data():
     plt.legend()
     plt.show()
 
-train_dataframe = pd.read_csv('files/rate.csv')
+train_dataframe = pd.read_csv(fn_lapse_rates)
 train_ds = dataframe_to_dataset(train_dataframe)
 
 # Create batches

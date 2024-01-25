@@ -4,6 +4,7 @@ import pandas as pd
 from constants import *
 
 count_per_data_point = 10
+count_per_data_point_new = 1
 
 # Create a list for each file
 data_s = []
@@ -23,20 +24,24 @@ def create_data():
                 if x < int(count_per_data_point * (1-lapse_rate)):
                     data_e.append((i, age+1, adviser, fum_s1, dur_s1))
                 i += 1
+    for age in AGE_RANGE_NEW:
+        for adviser in ADVISER_RANGE:
+            for x in range(count_per_data_point_new):
+                data_e.append((i, age+1, adviser, fum_s1, 0))
+                i += 1
 
 def list_to_csv(list, filename):
     df = pd.DataFrame(data=list, index=None, columns=['index', 'age', 'adviser', 'fum_s', 'dur_s'])
-    df.to_csv("files/" + filename + ".csv", index=False, header=True)
+    df.to_csv(filename, index=False, header=True)
 
-# Create records and add them to a dataframe and dataset
+# Create records and save to csv
 create_data()
-list_to_csv(data_s, "data_s")
-list_to_csv(data_e, "data_e")
+list_to_csv(data_s, fn_data_s)
+list_to_csv(data_e, fn_data_e)
 
+# Create a combined csv (both start and end)
 df_s = pd.DataFrame(data=data_s, index=None, columns=['index', 'age', 'adviser', 'fum_s', 'dur_s'])
 df_e = pd.DataFrame(data=data_e, index=None, columns=['index', 'age', 'adviser', 'fum_s', 'dur_s'])
-
-df_combined = df_s.join(df_e.set_index('index'), on='index', how='left', lsuffix='_0', rsuffix='_1')
-print(df_combined)
-df_combined.to_csv("files/data_c.csv", index=False, header=True)
+df_combined = df_s.join(df_e.set_index('index'), on='index', how='outer', lsuffix='_0', rsuffix='_1')
+df_combined.to_csv(fn_data_c, index=False, header=True)
 
